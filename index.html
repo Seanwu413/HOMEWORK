@@ -3,58 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飯店客源與營收分析平台</title>
+    <title>2025 台灣指標觀光旅館營運分析</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <style>
-        body { display: flex; margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f8f9fa; }
-        .sidebar { width: 220px; background-color: #2c3e50; color: white; height: 100vh; padding: 20px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); position: fixed; }
-        .sidebar h2 { font-size: 1.2rem; margin-bottom: 30px; border-bottom: 1px solid #4ca1af; padding-bottom: 10px; }
-        .sidebar a { display: block; color: #bdc3c7; text-decoration: none; margin: 15px 0; padding: 10px; border-radius: 5px; transition: 0.3s; }
-        .sidebar a:hover, .sidebar a.active { background-color: #34495e; color: white; font-weight: bold; }
-        .content { margin-left: 260px; padding: 40px; width: 100%; max-width: 1000px; }
-        .chart-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 40px; }
-        h1 { color: #2c3e50; margin-bottom: 30px;}
-        h2.section-title { color: #34495e; margin-top: 0; font-size: 1.4rem;}
-        p.desc { color: #7f8c8d; font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;}
+        /* 基礎排版設定 */
+        body { display: flex; margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0f2f5; color: #333; }
+        
+        /* 左側導覽列 */
+        .sidebar { width: 240px; background-color: #2c3e50; color: white; height: 100vh; padding: 25px 20px; box-shadow: 2px 0 10px rgba(0,0,0,0.1); position: fixed; box-sizing: border-box; }
+        .sidebar h2 { font-size: 1.3rem; margin-top: 0; margin-bottom: 30px; border-bottom: 2px solid #3498db; padding-bottom: 15px; }
+        .sidebar a { display: block; color: #bdc3c7; text-decoration: none; margin: 15px 0; padding: 12px; border-radius: 8px; transition: 0.3s; font-size: 0.95rem; line-height: 1.4; }
+        .sidebar a:hover, .sidebar a.active { background-color: #34495e; color: white; border-left: 4px solid #3498db; font-weight: bold; }
+        
+        /* 右側主要內容區 */
+        .content { margin-left: 240px; padding: 50px; width: calc(100% - 240px); max-width: 1000px; box-sizing: border-box; }
+        h1.main-title { color: #2c3e50; margin-top: 0; margin-bottom: 40px; font-size: 2.2rem; border-left: 6px solid #e74c3c; padding-left: 15px; }
+        
+        /* 圖表與文字的卡片區塊 */
+        .chart-container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 50px; }
+        h2.section-title { color: #2c3e50; margin-top: 0; font-size: 1.5rem; margin-bottom: 10px; }
+        p.desc { color: #7f8c8d; font-size: 0.95rem; line-height: 1.5; margin-bottom: 30px; }
+        
+        /* 分析文字的專屬區塊 */
+        .analysis-box { background-color: #f8f9fa; border-left: 4px solid #2ecc71; padding: 20px 25px; margin-top: 30px; border-radius: 0 8px 8px 0; }
+        .analysis-box h3 { margin-top: 0; color: #27ae60; font-size: 1.1rem; margin-bottom: 10px; }
+        .analysis-box p { margin: 0; font-size: 1rem; line-height: 1.8; color: #444; text-align: justify; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2>📊 分析儀表板</h2>
-        <a href="#chart1">1. 各國主力客源比較</a>
-        <a href="#chart2">2. 收入與人數關係</a>
-        <a href="#chart3" class="active">3. 所在縣市住房率比較</a>
+        <h2>📊 飯店數據分析報告</h2>
+        <a href="#chart1" class="active">1. 國內外客源結構大解密</a>
+        <a href="#chart2">2. 入住人數與總營收轉換</a>
+        <a href="#chart3">3. 四大觀光熱區住房率</a>
     </div>
 
     <div class="content">
-        <h1>2025年度 飯店營運數據分析報告</h1>
+        <h1 class="main-title">2025 台灣指標觀光旅館營運與客源結構分析</h1>
 
         <div id="chart1" class="chart-container">
-            <h2 class="section-title">📌 各國主力客源比較 (長條圖)</h2>
-            <p class="desc">比較四家指標性飯店在「本國旅客」與主要「外籍旅客」上的數量差異，可看出各飯店的客群依賴程度。</p>
+            <h2 class="section-title">📌 誰是主力？國內外客源結構大解密</h2>
+            <p class="desc">圖表呈現四家指標性飯店在「本國旅客」與主要「外籍旅客（日、韓、美）」的入住人次差異。</p>
+            
             <canvas id="sourceChart"></canvas>
+            
+            <div class="analysis-box">
+                <h3>💡 洞察與分析</h3>
+                <p>從數據中可以觀察到，四家指標性飯店皆以本國旅客為最大宗，顯示國內旅遊市場仍是支撐營運的基本盤。而在外籍客源方面，都會型飯店（如台北寒舍喜來登、高雄漢來大飯店）在日本與韓國旅客的吸引力上，顯著高於休閒渡假型飯店（如礁溪老爺酒店）。這可能與都會區具備較完善的大眾運輸系統、密集的商務活動，以及國際航班進出便利性有高度相關。</p>
+            </div>
         </div>
 
         <div id="chart2" class="chart-container">
-            <h2 class="section-title">📌 總營收與入住人數關係 (雙軸混合圖)</h2>
+            <h2 class="section-title">📌 人潮等於錢潮？入住人數與總營收的轉化效益</h2>
             <p class="desc">藍色長條對應左軸，代表「飯店年度總營收(億元)」；紅色折線對應右軸，代表「年度總入住人數(人)」。</p>
+            
             <canvas id="revenueChart"></canvas>
+
+            <div class="analysis-box">
+                <h3>💡 洞察與分析</h3>
+                <p>入住人數的多寡，並不完全等於總營收的絕對表現。比較礁溪老爺酒店與漢來大飯店的數據可以發現，礁溪老爺的總入住人數雖然相對較少，但其創造的營收規模卻表現亮眼，展現出極高的「客單價」效益。推測休閒渡假型飯店可能透過較高的平均房價（ADR），或是結合一泊二食、館內 SPA 等高附加價值的套裝服務，成功在有限的客流量下創造出更高的商業產值。</p>
+            </div>
         </div>
 
         <div id="chart3" class="chart-container">
-            <h2 class="section-title">📌 飯店所在縣市：總體客房住用率比較</h2>
-            <p class="desc">分析這四家飯店所在的縣市（台北市、宜蘭縣、高雄市、台中市）2025 全年度的整體觀光旅館住房率(Occupancy Rate)。</p>
+            <h2 class="section-title">📌 哪裡最熱門？四大觀光熱區住房率表現</h2>
+            <p class="desc">分析這四家飯店所在的縣市（台北市、台中市、高雄市、宜蘭縣）2025 全年度的整體觀光旅館住房率(Occupancy Rate)。</p>
+            
             <canvas id="regionChart"></canvas>
+
+            <div class="analysis-box">
+                <h3>💡 洞察與分析</h3>
+                <p>在 2025 全年度的總體客房住用率表現上，台北市以 72.69% 居冠，台中市與高雄市則穩定維持在 61% 左右，宜蘭縣為 58.80%。台北市的高住房率反映了首都圈在商務出差與國際觀光雙重引擎帶動下的穩定需求；而宜蘭縣的整體住房率較低，推測是受到休閒觀光地「平假日落差」及「淡旺季分明」的特性影響，導致平日空房率拉低了全年的平均數值。</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // 設定全局樣式
         Chart.defaults.font.family = "'Segoe UI', Tahoma, sans-serif";
 
-        // --- 第一張圖：客源比較 ---
+        // 第一張圖
         const ctx1 = document.getElementById('sourceChart').getContext('2d');
         new Chart(ctx1, {
             type: 'bar',
@@ -63,37 +91,22 @@
                 datasets: [
                     { label: '本國 (Taiwan)', data: [43868, 135737, 144793, 56666], backgroundColor: '#3498db' },
                     { label: '日本 (Japan)', data: [4080, 333, 22940, 60273], backgroundColor: '#e74c3c' },
-                    { label: '韓國 (Korea)', data: [1347, 249, 10461, 11377], backgroundColor: '#f1c40f' }
+                    { label: '韓國 (Korea)', data: [1347, 249, 10461, 11377], backgroundColor: '#f1c40f' },
+                    { label: '美國 (USA)', data: [1185, 0, 12949, 75161], backgroundColor: '#2ecc71' }
                 ]
             },
             options: { responsive: true }
         });
 
-        // --- 第二張圖：收入與人數關係 ---
+        // 第二張圖
         const ctx2 = document.getElementById('revenueChart').getContext('2d');
         new Chart(ctx2, {
             type: 'bar',
             data: {
                 labels: ['台中港酒店', '礁溪老爺酒店', '漢來大飯店', '台北寒舍喜來登'],
                 datasets: [
-                    {
-                        type: 'line',
-                        label: '總入住人數 (人)',
-                        data: [83112, 141386, 224130, 299560],
-                        borderColor: '#e74c3c',
-                        backgroundColor: '#e74c3c',
-                        borderWidth: 3,
-                        pointRadius: 6,
-                        tension: 0.3,
-                        yAxisID: 'yPeople'
-                    },
-                    {
-                        type: 'bar',
-                        label: '總營業收入 (億元)',
-                        data: [2.52, 9.36, 18.86, 28.32],
-                        backgroundColor: '#34495e',
-                        yAxisID: 'yMoney'
-                    }
+                    { type: 'line', label: '總入住人數 (人)', data: [83112, 141386, 224130, 299560], borderColor: '#e74c3c', backgroundColor: '#e74c3c', borderWidth: 3, pointRadius: 6, tension: 0.3, yAxisID: 'yPeople' },
+                    { type: 'bar', label: '總營業收入 (億元)', data: [2.52, 9.36, 18.86, 28.32], backgroundColor: '#34495e', yAxisID: 'yMoney' }
                 ]
             },
             options: {
@@ -105,52 +118,25 @@
             }
         });
 
-        // --- 第三張圖：所在縣市住房率 ---
+        // 第三張圖
         const ctx3 = document.getElementById('regionChart').getContext('2d');
         new Chart(ctx3, {
             type: 'bar',
             data: {
-                // X軸加上飯店名稱方便對照
-                labels: ['台中市 (台中港酒店)', '宜蘭縣 (礁溪老爺酒店)', '高雄市 (漢來大飯店)', '台北市 (台北寒舍喜來登)'],
+                labels: ['台中市 (台中港)', '宜蘭縣 (礁溪老爺)', '高雄市 (漢來)', '台北市 (喜來登)'],
                 datasets: [{
                     label: '2025 全年度平均住房率 (%)',
                     data: [61.44, 58.80, 61.38, 72.69],
-                    // 給不同的城市配上不同的顏色
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.7)',  // 台中藍
-                        'rgba(75, 192, 192, 0.7)',  // 宜蘭綠
-                        'rgba(255, 159, 64, 0.7)',  // 高雄橘
-                        'rgba(153, 102, 255, 0.7)'  // 台北紫
-                    ],
-                    borderColor: [
-                        'rgb(54, 162, 235)',
-                        'rgb(75, 192, 192)',
-                        'rgb(255, 159, 64)',
-                        'rgb(153, 102, 255)'
-                    ],
+                    backgroundColor: ['rgba(54, 162, 235, 0.7)', 'rgba(75, 192, 192, 0.7)', 'rgba(255, 159, 64, 0.7)', 'rgba(153, 102, 255, 0.7)'],
+                    borderColor: ['rgb(54, 162, 235)', 'rgb(75, 192, 192)', 'rgb(255, 159, 64)', 'rgb(153, 102, 255)'],
                     borderWidth: 1,
                     borderRadius: 5
                 }]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: { display: false }, // 因為 X 軸已經有說明了，可以隱藏上方圖例
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.parsed.y + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100, // 住房率最高100%
-                        title: { display: true, text: '住房率 (Occupancy Rate %)' }
-                    }
-                }
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: '住房率 (Occupancy Rate %)' } } }
             }
         });
     </script>
